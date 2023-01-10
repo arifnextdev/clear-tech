@@ -1,7 +1,13 @@
-import React from "react";
+import Slider from "../compoenents/Slider";
+import Products from "../pages/Products";
 
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <div className="home">
+      <Slider />
+      <Products />
+    </div>
+  );
 };
 
 export default Home;

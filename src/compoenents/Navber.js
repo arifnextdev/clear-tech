@@ -1,28 +1,31 @@
-import { FiShoppingCart } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { BsCart3 } from "react-icons/bs";
+// import { useSelector } from "react-redux";
 
-const Navber = () => {
+const Navbar = () => {
+  // const { cartItems } = useSelector((state) => state.cart);
+
   return (
-    <div className="navbar-bg bg-violet-700 text-violet-50 h-20 flex justify-between items-center ">
-      <div className="navber container mx-auto flex justify-between items-center gap-5">
-        <div className="nav-left cursor-pointer">
-          <span className="logo  text-xl font-semibold">
-            Clear <span className="text-orange-500 ">Tech</span>
+    <div className="navbar-bg bg-violet-700 text-violet-50 h-20 flex justify-center items-center">
+      <div className="navbar container mx-auto flex items-center justify-between">
+        <div className="left">
+          <span className="text-xl font-semibold">
+            tech<span className="text-orange-500">Alpha</span>
           </span>
         </div>
-        <div className="nav-right flex items-center gap-5 ">
-          <Link to="/" className="nav-links">
+        <div className="right flex items-center gap-5">
+          <Link to="/" className="nav-link">
             Home
           </Link>
-          <Link to="/Products" className="nav-links">
+          <Link to="/products" className="nav-link">
             Products
           </Link>
-
-          <Link to="Cart">
-            <span className="cart-icons relative">
-              <FiShoppingCart />
-              <span className="cart-container z-[1] absolute -top-3 -right-3 text-xs bg-orange-600 h-5 w-5 rounded-full flex items-center justify-center font-medium ">
-                10
+          <Link to="/cart">
+            <span className="cart-icon relative">
+              <BsCart3 />
+              <span className="cart-counter absolute z-[1] -top-3 -right-3 text-xs bg-orange-600 h-5 w-5 rounded-full flex items-center justify-center font-medium">
+                <p>10</p>
+                {/* {cartItems.length} */}
               </span>
             </span>
           </Link>
@@ -32,4 +35,4 @@ const Navber = () => {
   );
 };
 
-export default Navber;
+export default Navbar;

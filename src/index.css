@@ -7,11 +7,46 @@
 html,
 body {
   font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
 }
 
-/* Navber */
+/* Utilities */
+.space-font {
+  font-family: "Space Grotesk", sans-serif;
+}
 
-.nav-links:hover{
-  color: orange;
+/* Navbar */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  width: 0%;
+  height: 1px;
+  background-color: #f9fafb;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
   transition: 0.3s;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Slider */
+.slider {
+  height: calc(100vh - 5rem);
+  width: 500vw;
+  display: flex;
+}
+
+.slide {
+  width: 100vw;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
