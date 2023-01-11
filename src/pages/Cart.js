@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { currencyFormatter } from "../utilitis/currencyFormatter";
 
 const data = [
@@ -34,6 +35,15 @@ const data = [
 ];
 
 const Cart = () => {
+  const [count, setCount] = useState(1);
+
+  const handleIncrease = () => {
+    setCount((prevCount) => prevCount + 1);
+  };
+  const handleDecrease = () => {
+    setCount((prevCount) => prevCount - 1);
+  };
+
   return (
     <div className="cart-section container mx-auto py-10">
       <div className="cart-headline">
@@ -46,7 +56,7 @@ const Cart = () => {
           <div className="col-product col-span-2">product</div>
           <div className="col-unit-price">Unit price</div>
           <div className="col-qantity">Quantity</div>
-          <div className="col-total-price">Total price</div>
+          <div className="col-total-price ml-auto">Total price</div>
         </div>
       </div>
       <div className="products flex flex-col ">
@@ -67,20 +77,47 @@ const Cart = () => {
             </div>
             <div className="unit-price">{currencyFormatter(product.price)}</div>
             <div className="counter  flex ">
-              <button className="h-10 w-10 bg-gray-100 border border-gray-300">
+              <button
+                onClick={() => handleDecrease()}
+                className="h-10 w-10 bg-gray-100 border border-gray-300 active:bg-gray-700 active:text-gray-50"
+              >
                 -
               </button>
-              <button className="h-10 w-10 bg-gray-100 flex justify-center items-center border border-gray-300">
-                1
-              </button>
-              <button className="h-10 w-10 bg-gray-100 border border-gray-300">
+
+              <span className="h-10 w-10 bg-gray-100 flex justify-center items-center border border-gray-300">
+                {`${count}`}
+              </span>
+              <button
+                onClick={() => handleIncrease()}
+                className="h-10 w-10 bg-gray-100 border border-gray-300 active:bg-gray-700 active:text-gray-50"
+              >
                 +
               </button>
+            </div>
+            <div className="total-price ml-auto">
+              {currencyFormatter(product.price)}
             </div>
           </div>
         ))}
       </div>
-      <div className="cart-lower"></div>
+      <div className="cart-lower flex justify-between items-start py-10">
+        <button className="clear-btn uppercase border py-3 px-8 hover:bg-rose-200 hover:text-rose-600 font-medium hover:border-rose-200 duration-300">
+          Clear cart
+        </button>
+        <div className="flex flex-col items-start gap-2">
+          <div className="top flex justify-between w-full text-2xl font-medium">
+            <span className="subtotal text-sky-500">Subtotal</span>
+            <span className="price text-rose-500">$200</span>
+          </div>
+          <p>Texes and shipping costs are calculated at the checkout</p>
+          <button className="checkout bg-sky-500 w-full py-3 uppercase font-medium text-sky-50 tracking-widest hover:bg-sky-600 duration-300 ">
+            Checkout
+          </button>
+          <button className="continune uppercase text-sky-500 font-medium">
+            Countinune Shopping
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
