@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -6,11 +6,15 @@ import {
   clearCart,
   decreaseCart,
   removeToFormatCart,
+  getSubTotal,
+  cartTotalAmount,
 } from "../features/cartSlice";
 import { currencyFormatter } from "../utilitis/currencyFormatter";
 
 const Cart = () => {
-  const { cartItems: data } = useSelector((state) => state.cart);
+  const { cartItems: data, cartTotalAmount: subTotal } = useSelector(
+    (state) => state.cart
+  );
   const dispatch = useDispatch();
   const handleRemove = (product) => {
     dispatch(removeToFormatCart(product));
@@ -23,6 +27,10 @@ const Cart = () => {
   const handleIncrease = (product) => {
     dispatch(addToCart(product));
   };
+
+  useEffect(() => {
+    dispatch(getSubTotal());
+  }, [data, dispatch]);
 
   return (
     <div className="cart-section container mx-auto py-10">
@@ -53,7 +61,10 @@ const Cart = () => {
 
             <div className="products flex flex-col ">
               {data?.map((product) => (
-                <div className="product grid grid-cols-5 gap-10 border-b  pb-5  mt-10">
+                <div
+                  key={product.id}
+                  className="product grid grid-cols-5 gap-10 border-b  pb-5  mt-10"
+                >
                   <div className="left flex col-span-2 gap-5">
                     <img
                       src={product.image}
@@ -92,7 +103,7 @@ const Cart = () => {
                     </button>
                   </div>
                   <div className="total-price ml-auto">
-                    {currencyFormatter(product.price)}
+                    {currencyFormatter(product.price * product.cartQuantity)}
                   </div>
                 </div>
               ))}
@@ -109,7 +120,9 @@ const Cart = () => {
             <div className="flex flex-col items-start gap-2">
               <div className="top flex justify-between w-full text-2xl font-medium">
                 <span className="subtotal text-sky-500">Subtotal</span>
-                <span className="price text-rose-500">$200</span>
+                <span className="price text-rose-500">
+                  {currencyFormatter(subTotal)}
+                </span>
               </div>
               <p>Texes and shipping costs are calculated at the checkout</p>
               <Link
